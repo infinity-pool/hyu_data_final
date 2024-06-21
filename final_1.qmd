@@ -1,26 +1,40 @@
 ---
-title: "final_2018016244"
+title: "고객데이터분석 기말고사 : 미래자동차공학과 2018016244 추현욱"
 format: html
 editor: visual
 ---
 
-## Quarto
+## 1. 로또 당첨번호 크롤링 후 시각화
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+동행복권 사이트에서 최근 10개 당첨번호를 크롤링해서 가져온다(보너스 번호는 가져오지 않음). <https://www.dhlottery.co.kr/gameResult.do?method=byWin>.
 
-## Running Code
+## 번호별 당첨 횟수 막대그래프로 시각화
 
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
-1 + 1
-```
+#| label: load-package
+#| include: false
 
-You can add options to executable code like this
+library(tidyverse)
+library(palmerpenguins)
+```
 
 ```{r}
+#| label: plot-penguins
+#| warning: false
 #| echo: false
-2 * 2
-```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+ggplot(penguins, aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species, shape = species)) +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(
+    title = "Flipper and bill length",
+    subtitle = "Dimensions for penguins at Palmer Station LTER",
+    x = "Flipper length (mm)",
+    y = "Bill length (mm)",
+    color = "Penguin species",
+    shape = "Penguin species"
+  ) + theme_minimal(
+  )
+```
